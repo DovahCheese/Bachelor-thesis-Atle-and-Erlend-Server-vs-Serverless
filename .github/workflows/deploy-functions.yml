@@ -1,0 +1,53 @@
+name: Deploy — Azure Functions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/AzureFunctions/**'
+      - 'src/Shared/**'
+      - 'src/WebApi/Data/**'        # shared data layer
+      - 'src/WebApi/Stores/**'
+      - 'src/WebApi/Services/**'
+      - '.github/workflows/deploy-functions.yml'
+  workflow_dispatch:                # allow manual trigger from GitHub UI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Open SCM access restriction
+        # Kudu/SCM blocks GitHub Actions runner IPs by default.
+        # This step removes that restriction via the ARM API before deploying.
+        run: |
+          az rest \
+            --method PATCH \
+            --url "https://management.azure.com/subscriptions/dae0ab95-2ef9-42e4-89a5-a530e521e136/resourceGroups/ordle-rg/providers/Microsoft.Web/sites/ordle-functions/config/web?api-version=2022-03-01" \
+            --body '{"properties":{"scmIpSecurityRestrictions":[{"ipAddress":"Any","action":"Allow","priority":2147483647,"name":"Allow all"}],"scmIpSecurityRestrictionsUseMain":false}}'
+
+      - name: Publish
+        run: dotnet publish src/AzureFunctions/AzureFunctions.csproj -c Release -o publish
+
+      - name: Zip publish output
+        run: cd publish && zip -r ../deploy.zip . && cd ..
+
+      - name: Deploy to Azure Functions
+        run: |
+          az functionapp deploy \
+            --resource-group ordle-rg \
+            --name ordle-functions \
+            --src-path deploy.zip \
+            --type zip

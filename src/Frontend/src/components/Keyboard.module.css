@@ -1,0 +1,68 @@
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 1svh, 7px);
+  width: 100%;
+  max-width: 500px;
+  padding-bottom: clamp(4px, 1.5svh, 12px);
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* Accent row (ÆØÅ) — slightly separated */
+.accents {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--c-border-empty);
+}
+
+.key {
+  height: clamp(38px, 6.5svh, 54px);
+  min-width: 30px;
+  flex: 1;
+  max-width: 42px;
+  padding: 0 4px;
+  border: none;
+  border-radius: 4px;
+  background: var(--c-key-bg);
+  color: var(--c-text);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.08s, color 0.18s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.key:active {
+  transform: scale(0.92);
+}
+
+.wide {
+  min-width: 52px;
+  max-width: 62px;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+}
+
+/* Special action keys (ENTER / DEL) */
+.special {
+  background: var(--c-key-action);
+  color: var(--c-text);
+}
+
+/* Result states — these override bg + colour */
+.correct { background: var(--c-correct) !important; color: #fff !important; }
+.present { background: var(--c-present) !important; color: #fff !important; }
+.absent  { background: #d32f2f !important; color: #fff !important; }
+
+@media (max-width: 480px) {
+  .keyboard {
+    max-width: 100%;
+  }
+}

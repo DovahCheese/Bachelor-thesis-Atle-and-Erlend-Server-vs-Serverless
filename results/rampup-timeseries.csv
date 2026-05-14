@@ -1,0 +1,73 @@
+backend,minute,rps
+App Service,0.0833,7.0
+App Service,0.25,18.9
+App Service,0.4167,27.9
+App Service,0.5833,30.5
+App Service,0.75,47.8
+App Service,0.9167,58.8
+App Service,1.0833,67.7
+App Service,1.25,63.9
+App Service,1.4167,80.4
+App Service,1.5833,63.6
+App Service,1.75,81.2
+App Service,1.9167,98.5
+App Service,2.0833,101.1
+App Service,2.25,80.4
+App Service,2.4167,95.5
+App Service,2.5833,83.0
+App Service,2.75,55.1
+App Service,2.9167,99.7
+App Service,3.0833,81.1
+App Service,3.25,65.0
+App Service,3.4167,94.1
+App Service,3.5833,88.6
+App Service,3.75,76.8
+App Service,3.9167,87.7
+App Service,4.0833,85.0
+App Service,4.25,65.5
+App Service,4.4167,82.1
+App Service,4.5833,76.6
+App Service,4.75,53.0
+App Service,4.9167,58.5
+App Service,5.0833,56.4
+App Service,5.25,66.0
+App Service,5.4167,60.7
+App Service,5.5833,43.8
+App Service,5.75,25.0
+App Service,5.9167,6.2
+Functions,0.0833,7.5
+Functions,0.25,17.5
+Functions,0.4167,29.5
+Functions,0.5833,39.1
+Functions,0.75,49.4
+Functions,0.9167,61.5
+Functions,1.0833,68.8
+Functions,1.25,83.5
+Functions,1.4167,91.4
+Functions,1.5833,99.6
+Functions,1.75,114.3
+Functions,1.9167,122.7
+Functions,2.0833,125.3
+Functions,2.25,94.6
+Functions,2.4167,126.9
+Functions,2.5833,128.8
+Functions,2.75,128.8
+Functions,2.9167,128.3
+Functions,3.0833,129.8
+Functions,3.25,127.0
+Functions,3.4167,128.9
+Functions,3.5833,126.2
+Functions,3.75,129.4
+Functions,3.9167,126.1
+Functions,4.0833,130.1
+Functions,4.25,127.8
+Functions,4.4167,127.4
+Functions,4.5833,129.6
+Functions,4.75,127.0
+Functions,4.9167,129.2
+Functions,5.0833,112.5
+Functions,5.25,91.6
+Functions,5.4167,72.0
+Functions,5.5833,48.1
+Functions,5.75,28.7
+Functions,5.9167,6.6

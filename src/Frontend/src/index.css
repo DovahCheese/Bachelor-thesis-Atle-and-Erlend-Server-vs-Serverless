@@ -1,0 +1,14 @@
+/* index.css
+    Tailwind has been removed. All styling is handled by:
+    - App.css          (design tokens + shell layout)
+    - *.module.css     (component-scoped styles)
+
+    This file only provides the html/body height anchor that
+    App.css depends on to make the full-height shell work.
+*/
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}

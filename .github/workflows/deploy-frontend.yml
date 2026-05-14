@@ -1,0 +1,64 @@
+name: Deploy — Frontend (Static Web App)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/Frontend/**'
+      - '.github/workflows/deploy-frontend.yml'
+  workflow_dispatch:
+    inputs:
+      backend:
+        description: 'Which backend to point at'
+        required: true
+        default: 'functions'
+        type: choice
+        options:
+          - functions
+          - appservice
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: src/Frontend
+        run: npm install
+
+      - name: Set API URL
+        # On a push to main, default to Functions (the thesis serverless target).
+        # On manual dispatch, use the selected backend.
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.backend }}" = "appservice" ]; then
+            echo "VITE_API_URL=https://ordle-webapi-a3dhayeae7f9fbg3.westeurope-01.azurewebsites.net/api" >> $GITHUB_ENV
+          else
+            echo "VITE_API_URL=https://ordle-functions-h6gch3etcbb6bhgx.westeurope-01.azurewebsites.net/api" >> $GITHUB_ENV
+          fi
+
+      - name: Build
+        working-directory: src/Frontend
+        run: npm run build
+        env:
+          VITE_API_URL: ${{ env.VITE_API_URL }}
+          # Required when pointing at Azure Functions (AuthorizationLevel.Function).
+          # Store the default function key in GitHub repo secrets as VITE_FUNCTIONS_KEY.
+          # Leave the secret empty or unset when building for App Service.
+          VITE_FUNCTIONS_KEY: ${{ secrets.VITE_FUNCTIONS_KEY }}
+
+      - name: Deploy to Static Web App
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: upload
+          app_location: src/Frontend/dist
+          skip_app_build: true   # we built above with our own VITE_API_URL
+          output_location: ''

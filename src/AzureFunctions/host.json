@@ -1,0 +1,22 @@
+{
+    "version": "2.0",
+    "extensions": {
+        "http": {
+            "routePrefix": "api"
+        }
+    },
+    "cors": {
+        "allowedOrigins": [
+            "http://localhost:5173",
+            "https://orange-cliff-0ebd76a0f.7.azurestaticapps.net"
+        ],
+        "supportCredentials": false
+    },
+    "logging": {
+        "logLevel": {
+            "default": "Information",
+            "Microsoft": "Warning",
+            "Worker": "Warning"
+        }
+    }
+}
